@@ -10,37 +10,26 @@ public class Stars : MonoBehaviour
     private int currentStarIndex = 0;
     private float lineDrawProgress = 0f;
 
-    void Start()
+    void Update()
     {
-        StartCoroutine(DrawConstellation());
+        DrawConstellation();
     }
 
-    public IEnumerator DrawConstellation()
+    public void DrawConstellation()
     {
-        while (true)
+        Transform currentStar = starTransforms[currentStarIndex];
+        Transform nextStar = starTransforms[(currentStarIndex + 1) % starTransforms.Count];
+
+        lineDrawProgress += Time.deltaTime / drawingTime;
+
+        Vector3 interpolatedPosition = Vector3.Lerp(currentStar.position, nextStar.position, lineDrawProgress);
+
+        Debug.DrawLine(currentStar.position, interpolatedPosition, Color.white);
+
+        if (lineDrawProgress >= 1f)
         {
-            for (int i = 0; i < starTransforms.Count; i++)
-            {
-                Transform currentStar = starTransforms[i];
-                Transform nextStar = starTransforms[(i + 1) % starTransforms.Count];
-
-                lineDrawProgress = 0f;
-
-                while (lineDrawProgress < 1f)
-                {
-                    lineDrawProgress += Time.deltaTime / drawingTime;
-
-                    Vector3 interpolatedPosition = Vector3.Lerp(currentStar.position, nextStar.position, lineDrawProgress);
-
-                    Debug.DrawLine(currentStar.position, interpolatedPosition, Color.white);
-
-                    yield return null;
-                }
-
-                Debug.DrawLine(currentStar.position, nextStar.position, Color.white);
-
-                yield return null;
-            }
+            currentStarIndex = (currentStarIndex + 1) % starTransforms.Count;
+            lineDrawProgress = 0f;
         }
     }
 }
