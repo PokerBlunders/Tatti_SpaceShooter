@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     public float maxSpeed;
     public float accelerationTime;
 
+    public float decelerationTime = 2f;
+
+
     private void Start()
     {
         acceleration = targetSpeed / timeToReachTargetSpeed;
@@ -39,10 +42,10 @@ public class Player : MonoBehaviour
 
         Debug.Log("Index of the cat is:" + words.IndexOf("Cat"));
 
-        for(int i = 0; i < words.Count; i++)
+        /*for(int i = 0; i < words.Count; i++)
         {
             Debug.Log(words[i]);
-        }
+        }*/
         foreach(string word in words)
         {
             Debug.Log(word);
@@ -59,30 +62,40 @@ public class Player : MonoBehaviour
 
     public void PlayerMovement()
     {
+        bool isMoving = false;
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             velocity += Vector3.left * acceleration * Time.deltaTime;
+            isMoving = true;
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
             velocity += Vector3.right * acceleration * Time.deltaTime;
+            isMoving = true;
         }
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
             velocity += Vector3.up * acceleration * Time.deltaTime;
+            isMoving = true;
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
             velocity += Vector3.down * acceleration * Time.deltaTime;
+            isMoving = true;
         }
 
         if (velocity.magnitude > maxSpeed)
         {
             velocity = velocity.normalized * maxSpeed;
+        }
+
+        if (!isMoving)
+        {
+            velocity = Vector3.Lerp(velocity, Vector3.zero, Time.deltaTime / decelerationTime);
         }
 
         acceleration = maxSpeed / accelerationTime;
