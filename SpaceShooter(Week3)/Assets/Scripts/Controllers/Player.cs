@@ -21,6 +21,13 @@ public class Player : MonoBehaviour
 
     public float decelerationTime = 2f;
 
+    public float radarRadius = 5f;
+    public int circlePoints = 8;
+
+    public GameObject powerupPrefab;
+    public float powerupRadius = 3f;
+    public int numberOfPowerups = 5;
+
 
     private void Start()
     {
@@ -51,11 +58,14 @@ public class Player : MonoBehaviour
             Debug.Log(word);
         }
 
+        SpawnPowerups(powerupRadius, numberOfPowerups);
+
     }
 
     void Update()
     {
         PlayerMovement();
+        EnemyRadar(radarRadius, circlePoints);
 
         if (Input.GetKeyDown("w")){Debug.Log("Speed =" + velocity.magnitude);}
     }
@@ -101,6 +111,47 @@ public class Player : MonoBehaviour
         acceleration = maxSpeed / accelerationTime;
 
         transform.position += velocity * Time.deltaTime;
+    }
+
+    public void EnemyRadar(float radius, int circlePoints)
+    {
+        float angleNext = 360f / circlePoints;
+
+        float distanceToEnemy = Vector3.Distance(transform.position, enemyTransform.position);
+        bool isEnemyInRange = distanceToEnemy <= radius;
+        Color circleColor;
+
+        if (isEnemyInRange) 
+        {
+            circleColor = Color.red;
+        }
+        else
+        {
+            circleColor = Color.green;
+        }
+
+        for (int i = 0; i < circlePoints; i++)
+        {
+            float angle1 = i * angleNext * Mathf.Deg2Rad;
+            float angle2 = (i + 1) * angleNext * Mathf.Deg2Rad;
+
+            Vector3 point1 = new Vector3(Mathf.Cos(angle1), Mathf.Sin(angle1)) * radius + transform.position;
+            Vector3 point2 = new Vector3(Mathf.Cos(angle2), Mathf.Sin(angle2)) * radius + transform.position;
+
+            Debug.DrawLine(point1, point2, circleColor);
+        }
+    }
+
+    public void SpawnPowerups(float radius, int numberOfPowerups)
+    {
+        float angleNext = 360f / numberOfPowerups;
+
+        for (int i = 0; i < numberOfPowerups; i++)
+        {
+            float angle = i * angleNext * Mathf.Deg2Rad;
+            Vector3 spawnPosition = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * radius + transform.position;
+            Instantiate(powerupPrefab, spawnPosition, Quaternion.identity);
+        }
     }
 
 }
