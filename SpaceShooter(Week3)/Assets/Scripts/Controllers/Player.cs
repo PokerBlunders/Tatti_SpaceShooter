@@ -118,10 +118,9 @@ public class Player : MonoBehaviour
         float angleNext = 360f / circlePoints;
 
         float distanceToEnemy = Vector3.Distance(transform.position, enemyTransform.position);
-        bool isEnemyInRange = distanceToEnemy <= radius;
         Color circleColor;
 
-        if (isEnemyInRange) 
+        if (distanceToEnemy <= radius) 
         {
             circleColor = Color.red;
         }

@@ -17,8 +17,6 @@ public class Moon : MonoBehaviour
 
     public void OrbitalMotion(float radius, float speed, Transform planetTransform)
     {
-        if (planetTransform == null) return;
-        
         angle += speed * Time.deltaTime;
         if (angle > Mathf.PI * 2) angle -= Mathf.PI * 2;
 
