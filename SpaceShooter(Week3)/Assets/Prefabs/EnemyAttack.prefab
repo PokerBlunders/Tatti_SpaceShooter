@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1761202055222398
+--- !u!1 &1409900303673908
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,51 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4871648644786788}
-  - component: {fileID: -1126285579120572716}
+  - component: {fileID: 4504276444959460}
+  - component: {fileID: 5110697034785348614}
   m_Layer: 0
-  m_Name: HomingMissile
+  m_Name: EnemyAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4871648644786788
+--- !u!4 &4504276444959460
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761202055222398}
+  m_GameObject: {fileID: 1409900303673908}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4934941578370424}
+  - {fileID: 4023163249336194}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1126285579120572716
+--- !u!114 &5110697034785348614
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761202055222398}
+  m_GameObject: {fileID: 1409900303673908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dbed105e6b93e14bafd46a386f77a4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fb5fcbd2b06e894da1e0b7fda5ed791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialSpeed: 2
-  maxSpeed: 10
-  accelerationRate: 1
-  rotateSpeed: 200
-  target: {fileID: 0}
-  collisionDistance: 0.5
-  targetSearchRadius: 15
---- !u!1 &1819074805867038
+  playerTransform: {fileID: 0}
+  moveSpeed: 1
+--- !u!1 &1957684609019034
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,37 +55,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4934941578370424}
-  - component: {fileID: 212064975689195458}
+  - component: {fileID: 4023163249336194}
+  - component: {fileID: 212057120076995680}
   m_Layer: 0
-  m_Name: sprite_enemyMissile
+  m_Name: sprite_enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4934941578370424
+--- !u!4 &4023163249336194
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819074805867038}
+  m_GameObject: {fileID: 1957684609019034}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4871648644786788}
+  m_Father: {fileID: 4504276444959460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &212064975689195458
+--- !u!212 &212057120076995680
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1819074805867038}
+  m_GameObject: {fileID: 1957684609019034}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -125,12 +120,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b1af5f6269653c143909393a7ec21dfc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 497db9a684eb1074e87f3728a159378d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.18, y: 0.51}
+  m_Size: {x: 1, y: 0.94}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

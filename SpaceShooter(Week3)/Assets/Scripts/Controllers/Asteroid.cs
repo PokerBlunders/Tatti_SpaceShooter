@@ -37,7 +37,7 @@ public class Asteroid : MonoBehaviour
         float randomY = Random.Range(-maxFloatDistance, maxFloatDistance);
 
         targetPoint = new Vector3(transform.position.x + randomX, transform.position.y + randomY, transform.position.z);
-        Debug.Log("New target point: " + targetPoint);
+        //Debug.Log("New target point: " + targetPoint);
     }
 }
 

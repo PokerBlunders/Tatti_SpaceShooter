@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public float targetSpeed = 3f;
     public float timeToReachTargetSpeed = 2f;
     
-    private float acceleration = 1f;
+    float acceleration = 1f;
     private Vector3 velocity = Vector3.zero;
 
     public float maxSpeed;
@@ -28,11 +28,16 @@ public class Player : MonoBehaviour
     public float powerupRadius = 3f;
     public int numberOfPowerups = 5;
 
+    public GameObject missilePrefab;
+    public Transform missileSpawnPoint;
+    public GameObject enemyTarget;
+
 
     private void Start()
     {
         acceleration = targetSpeed / timeToReachTargetSpeed;
 
+        /*
         List<string> words = new List<string>();
         words.Add("Dog");
         //Dog[0]
@@ -52,13 +57,15 @@ public class Player : MonoBehaviour
         /*for(int i = 0; i < words.Count; i++)
         {
             Debug.Log(words[i]);
-        }*/
+        }
+        
         foreach(string word in words)
         {
             Debug.Log(word);
         }
+        */
 
-        SpawnPowerups(powerupRadius, numberOfPowerups);
+        //SpawnPowerups(powerupRadius, numberOfPowerups);
 
     }
 
@@ -68,6 +75,11 @@ public class Player : MonoBehaviour
         EnemyRadar(radarRadius, circlePoints);
 
         if (Input.GetKeyDown("w")){Debug.Log("Speed =" + velocity.magnitude);}
+
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
+            FireMissile();
+        }
     }
 
     public void PlayerMovement()
@@ -115,6 +127,8 @@ public class Player : MonoBehaviour
 
     public void EnemyRadar(float radius, int circlePoints)
     {
+        if (enemyTarget == null) return;
+
         float angleNext = 360f / circlePoints;
 
         float distanceToEnemy = Vector3.Distance(transform.position, enemyTransform.position);
@@ -151,6 +165,13 @@ public class Player : MonoBehaviour
             Vector3 spawnPosition = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)) * radius + transform.position;
             Instantiate(powerupPrefab, spawnPosition, Quaternion.identity);
         }
+    }
+
+    public void FireMissile()
+    {
+        GameObject missile = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
+        HomingMissile homingMissile = missile.GetComponent<HomingMissile>();
+        homingMissile.target = enemyTarget;
     }
 
 }
