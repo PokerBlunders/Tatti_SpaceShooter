@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
     public Transform missileSpawnPoint;
     public GameObject enemyTarget;
 
+    public List<GameObject> powerups;
+
 
     private void Start()
     {
@@ -80,6 +82,9 @@ public class Player : MonoBehaviour
         {
             FireMissile();
         }
+
+        Boxcast();
+        FindClosestPowerup();
     }
 
     public void PlayerMovement()
@@ -172,6 +177,56 @@ public class Player : MonoBehaviour
         GameObject missile = Instantiate(missilePrefab, missileSpawnPoint.position, missileSpawnPoint.rotation);
         HomingMissile homingMissile = missile.GetComponent<HomingMissile>();
         homingMissile.target = enemyTarget;
+    }
+
+    public void Boxcast()
+    {
+        Vector2 boxSize = new Vector2(5f, 5f);
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, boxSize, 0f, Vector2.zero);
+
+        bool enemyDetected = false;
+        foreach (var hit in hits)
+        {
+            if (hit.collider != null)
+            {
+                enemyDetected = true;
+                Debug.Log("Enemy entered the box.");
+                break;
+            }
+        }
+
+        if (!enemyDetected)
+        {
+            Debug.Log("No enemy in the box.");
+        }
+    }
+
+    void FindClosestPowerup()
+    {
+        if (powerups.Count == 0) return;
+
+        float closestDistance = Mathf.Infinity;
+        GameObject closestPowerup = null;
+
+        foreach (GameObject powerup in powerups)
+        {
+            if (powerup == null) continue;
+
+            Vector3 closestPoint = powerup.GetComponent<Collider2D>().ClosestPoint(transform.position);
+            float distance = Vector3.Distance(transform.position, closestPoint);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPowerup = powerup;
+            }
+        }
+
+        if (closestPowerup != null)
+        {
+            Vector3 closestPowerupPosition = closestPowerup.transform.position;
+            Debug.Log("Closest Powerup Position: " + closestPowerupPosition);
+        }
     }
 
 }
